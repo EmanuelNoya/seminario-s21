@@ -83,7 +83,7 @@ public class Main {
                         for (Circuito c : tablero.getCircuitos()) {
                             System.out.println("  - Circuito " + c.getTipo() + ": " + c.getArtefactos().size() + " artefactos");
                             for (Artefacto art : c.getArtefactos()) {
-                                System.out.println("    • " + art.getNombre() + " (" + art.getWattage() + "W)");
+                                System.out.println("    - " + art.getNombre() + " (" + art.getWattage() + "W)");
                             }
                         }
                         break;
