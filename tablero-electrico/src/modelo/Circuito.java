@@ -31,7 +31,7 @@ public class Circuito {
     }
 
     public int getCargaTotal() {
-        return artefactos.stream().mapToInt(Artefacto::getWattage).sum();
+        return (artefactos.stream().mapToInt(Artefacto::getWattage).sum())/220; // Convertir watts a amperios (asumiendo 220V)
     }
 
     public String getTipo() {
