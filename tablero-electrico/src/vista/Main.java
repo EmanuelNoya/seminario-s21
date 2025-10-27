@@ -15,7 +15,7 @@ public class Main {
             System.out.println("3. Agregar artefacto a circuito");
             System.out.println("4. Mostrar configuración");
             System.out.println("5. Validar tablero");
-            System.out.println("6. Salir");
+            System.out.println("0. Salir");
             System.out.print("Seleccione una opción: ");
 
             int opcion = sc.nextInt();
@@ -79,7 +79,7 @@ public class Main {
                             break;
                         }
 
-                        System.out.println("\n🔧 Tablero: " + tablero.getCircuitos().size() + " circuitos");
+                        System.out.println("\n Tablero: " + tablero.getCircuitos().size() + " circuitos");
                         for (Circuito c : tablero.getCircuitos()) {
                             System.out.println("  - Circuito " + c.getTipo() + ": " + c.getArtefactos().size() + " artefactos");
                             for (Artefacto art : c.getArtefactos()) {
@@ -98,7 +98,7 @@ public class Main {
                         System.out.println(valido ? "Tablero válido." : "Tablero excede la protección!!!.");
                         break;
 
-                    case 6:
+                    case 0:
                         System.out.println("Fin del programa.");
                         return;
 
