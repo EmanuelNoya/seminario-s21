@@ -11,7 +11,7 @@ public class DBConnection {
     private static String PASSWORD = "";
 
     static {
-        // try to load properties file if present
+        // intenta leer el archivo de propiedades si está presente
         try (InputStream in = DBConnection.class.getResourceAsStream("/conexionDB/db.properties")) {
             if (in != null) {
                 Properties p = new Properties();
@@ -21,12 +21,12 @@ public class DBConnection {
                 PASSWORD = p.getProperty("db.password", PASSWORD);
             }
         } catch (Exception e) {
-            // ignore, use defaults
+            // ignorar y usar valores por defecto
         }
     }
 
     public static Connection getConnection() throws Exception {
-        // Ensure the MySQL JDBC driver is available at runtime (mysql-connector-java)
+        // Asegura que el driver JDBC de MySQL esté disponible en tiempo de ejecución (mysql-connector-java)
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 }
