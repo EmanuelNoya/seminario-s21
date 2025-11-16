@@ -27,6 +27,25 @@ public class DBConnection {
 
     public static Connection getConnection() throws Exception {
         // Asegura que el driver JDBC de MySQL esté disponible en tiempo de ejecución (mysql-connector-java)
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+        try {
+            return DriverManager.getConnection(URL, USER, PASSWORD);
+        } catch (java.sql.SQLException e) {
+            // Mensaje claro para quien invoque la conexión
+            String msg = "No se pudo conectar a la base de datos: " + e.getMessage();
+            System.err.println(msg);
+            throw new Exception(msg, e);
+        }
+    }
+
+    /**
+     * Prueba rápida de conectividad a la base de datos. Devuelve true si puede abrir una conexión.
+     */
+    public static boolean testConnection() {
+        try (Connection c = DriverManager.getConnection(URL, USER, PASSWORD)) {
+            return true;
+        } catch (java.sql.SQLException e) {
+            System.err.println("testConnection: no se pudo conectar a la BD: " + e.getMessage());
+            return false;
+        }
     }
 }
