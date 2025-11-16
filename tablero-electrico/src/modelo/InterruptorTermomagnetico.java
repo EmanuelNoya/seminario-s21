@@ -8,6 +8,11 @@ public class InterruptorTermomagnetico extends Interruptor {
         this.descripcion = descripcion;
     }
 
+    public InterruptorTermomagnetico(Integer id, String descripcion, int amperaje, double precio) {
+        super(id, amperaje, precio);
+        this.descripcion = descripcion;
+    }
+
     @Override
     public boolean proteger(int cargaTotal) {
         return cargaTotal <= getAmperaje();
@@ -15,5 +20,9 @@ public class InterruptorTermomagnetico extends Interruptor {
 
     public String getDescripcion() {
         return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 }
