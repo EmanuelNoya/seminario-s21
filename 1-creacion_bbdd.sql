@@ -32,8 +32,8 @@ CREATE TABLE Artefacto (
 CREATE TABLE TableroPrincipal (
   id INT AUTO_INCREMENT PRIMARY KEY,
   descripcion VARCHAR(255),
-  idInterruptorDiferencial INT UNIQUE,
-  idInterruptorTermomagnetico INT UNIQUE,
+  idInterruptorDiferencial INT,
+  idInterruptorTermomagnetico INT,
   FOREIGN KEY (idInterruptorDiferencial) REFERENCES InterruptorDiferencial(id),
   FOREIGN KEY (idInterruptorTermomagnetico) REFERENCES InterruptorTermomagnetico(id)
 );
@@ -45,7 +45,7 @@ CREATE TABLE Circuito (
   calibreMaximo INT,
   cantidadBocas INT,
   idTablero INT,
-  idInterruptorTermomagnetico INT UNIQUE,
+  idInterruptorTermomagnetico INT,
   FOREIGN KEY (idTablero) REFERENCES TableroPrincipal(id),
   FOREIGN KEY (idInterruptorTermomagnetico) REFERENCES InterruptorTermomagnetico(id)
 );
