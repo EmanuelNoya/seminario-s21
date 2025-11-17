@@ -9,7 +9,11 @@ public class CircuitoController {
     private CircuitoDAO dao = new CircuitoDAO();
 
     public Circuito create(String tipo, int calibreMaximo, int cantidadBocas, InterruptorTermomagnetico interruptor) throws Exception {
-        Circuito c = new Circuito(tipo, calibreMaximo, cantidadBocas, interruptor);
+        return create(tipo, calibreMaximo, cantidadBocas, interruptor, 0);
+    }
+
+    public Circuito create(String tipo, int calibreMaximo, int cantidadBocas, InterruptorTermomagnetico interruptor, int tableroId) throws Exception {
+        Circuito c = new Circuito(tipo, calibreMaximo, cantidadBocas, interruptor, tableroId);
         return dao.save(c);
     }
 

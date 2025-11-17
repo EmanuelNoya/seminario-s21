@@ -8,6 +8,7 @@ import java.util.List;
 
 public class CircuitoDAO {
     private InterruptorTermomagneticoDAO interruptorDAO = new InterruptorTermomagneticoDAO();
+    private ArtefactoPorCircuitoDAO artefactoPorCircuitoDAO = new ArtefactoPorCircuitoDAO();
 
     public Circuito save(Circuito c) throws Exception {
         String sql = "INSERT INTO Circuito(tipo, calibreMaximo, cantidadBocas, idTablero, idInterruptorTermomagnetico) VALUES (?, ?, ?, ?, ?)";
@@ -16,7 +17,7 @@ public class CircuitoDAO {
                 ps.setString(1, c.getTipo());
                 ps.setInt(2, c.getCalibreMaximo());
                 ps.setInt(3, c.getCantidadBocas());
-                ps.setNull(4, java.sql.Types.INTEGER); // idTablero se asigna cuando se vincula al tablero
+                ps.setInt(4, c.getTableroId());
                 if (c.getInterruptor() != null && c.getInterruptor().getId() != null) {
                     ps.setInt(5, c.getInterruptor().getId());
                 } else {
@@ -74,7 +75,7 @@ public class CircuitoDAO {
     }
 
     public List<Circuito> findAll() throws Exception {
-        String sql = "SELECT id, tipo, calibreMaximo, cantidadBocas, idInterruptorTermomagnetico FROM Circuito";
+        String sql = "SELECT id, tipo, calibreMaximo, cantidadBocas, idTablero, idInterruptorTermomagnetico FROM Circuito";
         List<Circuito> res = new ArrayList<>();
         try {
             try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
@@ -87,7 +88,9 @@ public class CircuitoDAO {
                         interruptor = interruptorDAO.findById(interruptorId);
                     }
 
-                    Circuito c = new Circuito(rs.getInt("id"), rs.getString("tipo"), rs.getInt("calibreMaximo"), rs.getInt("cantidadBocas"), interruptor);
+                    Circuito c = new Circuito(rs.getInt("id"), rs.getString("tipo"), rs.getInt("calibreMaximo"), rs.getInt("cantidadBocas"), interruptor, rs.getInt("idTablero"));
+                    // Cargar artefactos asociados
+                    c.setArtefactos(artefactoPorCircuitoDAO.getArtefactoPorCircuito(c.getId()));
                     res.add(c);
                 }
             }
@@ -99,7 +102,7 @@ public class CircuitoDAO {
     }
 
     public Circuito findById(int id) throws Exception {
-        String sql = "SELECT id, tipo, calibreMaximo, cantidadBocas, idInterruptorTermomagnetico FROM Circuito WHERE id = ?";
+        String sql = "SELECT id, tipo, calibreMaximo, cantidadBocas, idTablero, idInterruptorTermomagnetico FROM Circuito WHERE id = ?";
         try {
             try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
                 ps.setInt(1, id);
@@ -113,7 +116,10 @@ public class CircuitoDAO {
                             interruptor = interruptorDAO.findById(interruptorId);
                         }
 
-                        return new Circuito(rs.getInt("id"), rs.getString("tipo"), rs.getInt("calibreMaximo"), rs.getInt("cantidadBocas"), interruptor);
+                        Circuito c = new Circuito(rs.getInt("id"), rs.getString("tipo"), rs.getInt("calibreMaximo"), rs.getInt("cantidadBocas"), interruptor, rs.getInt("idTablero"));
+                        // Cargar artefactos asociados
+                        c.setArtefactos(artefactoPorCircuitoDAO.getArtefactoPorCircuito(c.getId()));
+                        return c;
                     }
                 }
             }
@@ -125,7 +131,7 @@ public class CircuitoDAO {
     }
 
     public List<Circuito> findByTableroId(int tableId) throws Exception {
-        String sql = "SELECT id, tipo, calibreMaximo, cantidadBocas, idInterruptorTermomagnetico FROM Circuito WHERE idTablero = ?";
+        String sql = "SELECT id, tipo, calibreMaximo, cantidadBocas, idTablero, idInterruptorTermomagnetico FROM Circuito WHERE idTablero = ?";
         List<Circuito> res = new ArrayList<>();
         try {
             try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -140,7 +146,9 @@ public class CircuitoDAO {
                             interruptor = interruptorDAO.findById(interruptorId);
                         }
 
-                        Circuito c = new Circuito(rs.getInt("id"), rs.getString("tipo"), rs.getInt("calibreMaximo"), rs.getInt("cantidadBocas"), interruptor);
+                        Circuito c = new Circuito(rs.getInt("id"), rs.getString("tipo"), rs.getInt("calibreMaximo"), rs.getInt("cantidadBocas"), interruptor, rs.getInt("idTablero"));
+                        // Cargar artefactos asociados
+                        c.setArtefactos(artefactoPorCircuitoDAO.getArtefactoPorCircuito(c.getId()));
                         res.add(c);
                     }
                 }

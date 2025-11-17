@@ -9,18 +9,20 @@ public class Circuito {
     private int calibreMaximo;
     private int cantidadBocas;
     private InterruptorTermomagnetico interruptor;
+    private int tableroId;
     private List<Artefacto> artefactos;
 
-    public Circuito(String tipo, int calibreMaximo, int cantidadBocas, InterruptorTermomagnetico interruptor) {
-        this(null, tipo, calibreMaximo, cantidadBocas, interruptor);
+    public Circuito(String tipo, int calibreMaximo, int cantidadBocas, InterruptorTermomagnetico interruptor, int tableroId) {
+        this(null, tipo, calibreMaximo, cantidadBocas, interruptor, tableroId);
     }
 
-    public Circuito(Integer id, String tipo, int calibreMaximo, int cantidadBocas, InterruptorTermomagnetico interruptor) {
+    public Circuito(Integer id, String tipo, int calibreMaximo, int cantidadBocas, InterruptorTermomagnetico interruptor, int tableroId) {
         this.id = id;
         this.tipo = tipo;
         this.calibreMaximo = calibreMaximo;
         this.cantidadBocas = cantidadBocas;
         this.interruptor = interruptor;
+        this.tableroId = tableroId;
         this.artefactos = new ArrayList<>();
     }
 
@@ -78,5 +80,13 @@ public class Circuito {
 
     public void setCantidadBocas(int cantidadBocas) {
         this.cantidadBocas = cantidadBocas;
+    }
+
+    public int getTableroId() {
+        return tableroId;
+    }
+
+    public void setTableroId(int tableroId) {
+        this.tableroId = tableroId;
     }
 }
