@@ -56,8 +56,8 @@ public class Main {
                 
                 // Mostrar estado del tablero
                 if (tablero != null) {
-                    System.out.println("[ACTIVO] Tablero: " + tablero.getDescripcion() + " (ID=" + tablero.getId() + ")");
-                    System.out.println();
+                    double valor = calcularValorInterruptores(tablero);
+                    System.out.printf("[ACTIVO] Tablero: %s (ID=%d) - Valor interruptores: $%.2f\n\n", tablero.getDescripcion(), tablero.getId(), valor);
                 } else {
                     System.out.println("[SIN TABLERO] No hay tablero activo");
                     System.out.println();
@@ -410,6 +410,25 @@ public class Main {
             }
             circNum++;
         }
+    }
+
+    private static double calcularValorInterruptores(TableroPrincipal tablero) {
+        double total = 0.0;
+        if (tablero == null) return total;
+        if (tablero.getInterruptorDiferencial() != null) {
+            total += tablero.getInterruptorDiferencial().getPrecio();
+        }
+        if (tablero.getInterruptorPrincipal() != null) {
+            total += tablero.getInterruptorPrincipal().getPrecio();
+        }
+        if (tablero.getCircuitos() != null) {
+            for (Circuito c : tablero.getCircuitos()) {
+                if (c.getInterruptor() != null) {
+                    total += c.getInterruptor().getPrecio();
+                }
+            }
+        }
+        return total;
     }
 
     private static void agregarArtefacto(Scanner sc, TableroPrincipal tablero) throws Exception {
